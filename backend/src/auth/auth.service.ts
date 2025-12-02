@@ -10,7 +10,7 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, pass: string) {
-    const user = await this.prisma.client!.user.findUnique({
+    const user = await this.prisma.user.findUnique({
       where: { email },
     });
 
@@ -30,18 +30,18 @@ export class AuthService {
       user,
     };
   }
+
   async register(data: { name: string; email: string; password: string }) {
-  const user = await this.prisma.client!.user.create({
-    data,
-  });
+    const user = await this.prisma.user.create({
+      data,
+    });
 
-  const payload = { sub: user.id, email: user.email };
+    const payload = { sub: user.id, email: user.email };
 
-  return {
-    user,
-    accessToken: this.jwt.sign(payload),
-    refreshToken: this.jwt.sign(payload, { expiresIn: '7d' }),
-  };
-}
-
+    return {
+      user,
+      accessToken: this.jwt.sign(payload),
+      refreshToken: this.jwt.sign(payload, { expiresIn: '7d' }),
+    };
+  }
 }

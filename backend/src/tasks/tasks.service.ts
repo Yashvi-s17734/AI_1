@@ -1,24 +1,33 @@
 import { Injectable } from '@nestjs/common';
-
-export interface Task {
-  id: number;
-  title: string;
-}
+import { PrismaService } from '../../prisma/prisma.service';
 
 @Injectable()
 export class TasksService {
-  private tasks: Task[] = [];   // ← give type to tasks
+  constructor(private prisma: PrismaService) {}
 
   getTasks() {
-    return this.tasks;
+    return this.prisma.task.findMany();
   }
 
-  createTask(title: string) {
-    const newTask: Task = { 
-      id: Date.now(), 
-      title: title     // ← use the variable, not String
-    };
-    this.tasks.push(newTask);
-    return newTask;
+  createTask(title: string, userId: string) {
+    return this.prisma.task.create({
+      data: {
+        title,
+        userId,
+      },
+    });
+  }
+
+  updateTask(id: string, data: any) {
+    return this.prisma.task.update({
+      where: { id },
+      data,
+    });
+  }
+
+  deleteTask(id: string) {
+    return this.prisma.task.delete({
+      where: { id },
+    });
   }
 }
