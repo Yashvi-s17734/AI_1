@@ -1,12 +1,5 @@
+import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 
-export class PrismaService extends PrismaClient {
-  constructor() {
-    super({
-      adapter: {
-        provider: 'mongodb',
-        url: process.env.DATABASE_URL!,
-      },
-    });
-  }
-}
+@Injectable()
+export class PrismaService extends PrismaClient {}
