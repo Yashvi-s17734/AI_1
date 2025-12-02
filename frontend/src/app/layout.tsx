@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
+import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,7 +20,7 @@ export default function RootLayout({
         <Sidebar />
         <div className="flex-1">
           <Navbar />
-          <main className="p-6">{children}</main>
+          <main className="p-6"><SessionProvider>{children}</SessionProvider></main>
         </div>
       </body>
     </html>
