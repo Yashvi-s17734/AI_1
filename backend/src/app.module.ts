@@ -7,6 +7,8 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { TasksModule } from './tasks/tasks.module';
 import { UsersModule } from './users/users.module';
+import { HabitsModule } from './habits/habits.module';
+import { NotificationsModule } from './notifications/notifications.module';
 
 import { PrismaService } from '../prisma/prisma.service';
 
@@ -19,6 +21,8 @@ import { PrismaService } from '../prisma/prisma.service';
     AuthModule,
     TasksModule,
     UsersModule,
+    HabitsModule,
+    NotificationsModule
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
