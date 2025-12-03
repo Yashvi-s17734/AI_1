@@ -14,6 +14,7 @@ model User {
   password String
 
   tasks    Task[]
+  habits Habit[]
 }
 
 model Task {
@@ -23,4 +24,23 @@ model Task {
 
   userId    String   @db.ObjectId
   user      User     @relation(fields: [userId], references: [id])
+}
+model Habit {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  frequency String    // "daily"|"weekly"
+  reminderTime  String?  // "18:00"
+  reminderDays  String[] // ["mon", "tue", "wed"]
+  isReminderOn  Boolean  @default(false)
+  userId    String    @db.ObjectId
+  user      User      @relation(fields: [userId], references: [id])
+  createdAt DateTime  @default(now())
+  logs      HabitLog[]
+}
+
+model HabitLog {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  habitId String   @db.ObjectId
+  date    DateTime
+  habit   Habit    @relation(fields: [habitId], references: [id])
 }
